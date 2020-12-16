@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlatformManager : MonoBehaviour
 {
     float moveSpeed = 0.1f, scaleRate = 1.5f;
+    public float bobUp, bobDown;
     bool floatUp = true, scaleDown = true;
     public bool movePlatform, scalePlatform, shrink = false;
 
@@ -28,11 +29,11 @@ public class PlatformManager : MonoBehaviour
         if (movePlatform == true)
         {
             
-            if (transform.position.y > 0.1f)
+            if (transform.position.y > bobUp)
             {
                 floatUp = false;
             }
-            if (transform.position.y < -0.1f)
+            if (transform.position.y < bobDown)
             {
                 floatUp = true;
             }
@@ -50,6 +51,7 @@ public class PlatformManager : MonoBehaviour
         // Scales the platforms size
         if (scalePlatform == true)
         {
+            
             if (shrink == true)
             {
                 ASshrinking.clip = growing;
