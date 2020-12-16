@@ -6,13 +6,19 @@ public class PlatformManager : MonoBehaviour
 {
     float moveSpeed = 0.1f, scaleRate = 1.5f;
     bool floatUp = true, scaleDown = true;
-    public bool movePlatform, shrink = false;
+    public bool movePlatform, scalePlatform, shrink = false;
 
     public PlayerBehaviour player;
+
+    public AudioSource ASgrowing, ASshrinking;
+    public AudioClip growing;
+    public AudioClip shrinking;
 
     private void Start()
     {
         player = FindObjectOfType<PlayerBehaviour>();
+        ASgrowing = gameObject.AddComponent<AudioSource>();
+        ASshrinking = gameObject.AddComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -21,6 +27,7 @@ public class PlatformManager : MonoBehaviour
         // Moves the platform up and down
         if (movePlatform == true)
         {
+            
             if (transform.position.y > 0.1f)
             {
                 floatUp = false;
@@ -41,43 +48,51 @@ public class PlatformManager : MonoBehaviour
         }
 
         // Scales the platforms size
-        if (shrink == true)
+        if (scalePlatform == true)
         {
-           
-            if (transform.localScale.x > 0f && transform.localScale.y > 0f)
+            if (shrink == true)
             {
-                scaleDown = true;
+                ASshrinking.clip = growing;
+                ASshrinking.Play();
+
+                if (transform.localScale.x > 0f && transform.localScale.y > 0f)
+                {
+                    scaleDown = true;
+                }
+
+                if (scaleDown)
+                {
+                    Vector2 scale = new Vector2(transform.localScale.x - scaleRate * Time.deltaTime, transform.localScale.y - scaleRate * Time.deltaTime);
+                    transform.localScale = scale;
+                }
+
+                if (transform.localScale.x < 0.1f && transform.localScale.y < 0.1f)
+                {
+                    scaleDown = false;
+                }
             }
-
-            if (scaleDown)
+            
+            if (shrink == false)
             {
-                Vector2 scale = new Vector2(transform.localScale.x - scaleRate * Time.deltaTime, transform.localScale.y - scaleRate * Time.deltaTime);
-                transform.localScale = scale;
-            }
+                ASgrowing.clip = shrinking;
+                ASgrowing.Play();
 
-            if (transform.localScale.x < 0.1f && transform.localScale.y < 0.1f)
-            {
-                scaleDown = false;
+                if (transform.localScale.x > 5f && transform.localScale.y > 5f)
+                {
+                    scaleDown = false;
+                   
+                }
 
-            }
-        }
+                if (scaleDown)
+                {
+                    Vector2 scale = new Vector2(transform.localScale.x + scaleRate * Time.deltaTime, transform.localScale.y + scaleRate * Time.deltaTime);
+                    transform.localScale = scale;
+                }
 
-        if (shrink == false)
-        {
-            if (transform.localScale.x > 5f && transform.localScale.y > 5f)
-            {
-                scaleDown = false;
-            }
-
-            if (scaleDown)
-            {
-                Vector2 scale = new Vector2(transform.localScale.x + scaleRate * Time.deltaTime, transform.localScale.y + scaleRate * Time.deltaTime);
-                transform.localScale = scale;
-            }
-
-            if (transform.localScale.x < 5f && transform.localScale.y < 5f)
-            {
-                scaleDown = true;
+                if (transform.localScale.x < 5f && transform.localScale.y < 5f)
+                {
+                    scaleDown = true;
+                }
             }
         }
     }
