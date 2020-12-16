@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class PlatformManager : MonoBehaviour
 {
-    float moveSpeed = 0.1f;
-    bool floatUp = true;
-    public bool movePlatform;
+    float moveSpeed = 0.1f, scaleRate = 1.5f;
+    bool floatUp = true, scaleDown = true;
+    public bool movePlatform, shrink = false;
+
+    public PlayerBehaviour player;
+
+    private void Start()
+    {
+        player = FindObjectOfType<PlayerBehaviour>();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        // Moves the platform left and right based on a range
+        // Moves the platform up and down
         if (movePlatform == true)
         {
             if (transform.position.y > 0.1f)
@@ -30,6 +37,25 @@ public class PlatformManager : MonoBehaviour
             else
             {
                 transform.position = new Vector2(transform.position.x, transform.position.y - moveSpeed * Time.deltaTime);
+            }
+        }
+
+        // Scales the platforms size
+        if (shrink == true)
+        {
+            if (transform.localScale.x < 1f && transform.localScale.y < 1f)
+            {
+                scaleDown = false;
+            }
+            if (transform.localScale.x < 0f && transform.localScale.y < 0f)
+            {
+                scaleDown = true;
+            }
+
+            if (scaleDown)
+            {
+                Vector2 scale = new Vector2(transform.localScale.x - scaleRate * Time.deltaTime, transform.localScale.y - scaleRate * Time.deltaTime);
+                transform.localScale = scale;
             }
         }
     }

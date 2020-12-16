@@ -4050,7 +4050,7 @@ GameObject:
   - component: {fileID: 581860976}
   m_Layer: 0
   m_Name: platform-long
-  m_TagString: Walls
+  m_TagString: Platforms
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4067,7 +4067,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66b2dda9d2aeea94185f81c6b11af4a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movePlatform: 1
+  movePlatform: 0
+  shrink: 0
+  player: {fileID: 0}
 --- !u!50 &581860977
 Rigidbody2D:
   serializedVersion: 4
@@ -24978,6 +24980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b57c7f486afe082408faf49840ab5799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shrink: 0
   joystick: {fileID: 465079448}
   joystickHorizontalSensitivity: 0.1
   joystickVerticalSensitivity: 0.5

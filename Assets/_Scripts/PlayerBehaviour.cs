@@ -20,6 +20,9 @@ public enum ImpulseSounds
 
 public class PlayerBehaviour : MonoBehaviour
 {
+
+    public bool shrink = false;
+
     [Header("Controls")]
     public Joystick joystick;
     public float joystickHorizontalSensitivity;
@@ -281,6 +284,12 @@ public class PlayerBehaviour : MonoBehaviour
         {
             other.gameObject.GetComponent<MovingPlatformController>().isActive = true;
             transform.SetParent(other.gameObject.transform);
+        }
+
+        // Shrinks the platform when it collides with the player
+        if (other.gameObject.CompareTag("Platforms"))
+        {
+            other.gameObject.GetComponent<PlatformManager>().shrink = true;
         }
     }
 
