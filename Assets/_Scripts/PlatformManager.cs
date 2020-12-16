@@ -43,11 +43,8 @@ public class PlatformManager : MonoBehaviour
         // Scales the platforms size
         if (shrink == true)
         {
-            if (transform.localScale.x < 1f && transform.localScale.y < 1f)
-            {
-                scaleDown = false;
-            }
-            if (transform.localScale.x < 0f && transform.localScale.y < 0f)
+           
+            if (transform.localScale.x > 0f && transform.localScale.y > 0f)
             {
                 scaleDown = true;
             }
@@ -56,6 +53,31 @@ public class PlatformManager : MonoBehaviour
             {
                 Vector2 scale = new Vector2(transform.localScale.x - scaleRate * Time.deltaTime, transform.localScale.y - scaleRate * Time.deltaTime);
                 transform.localScale = scale;
+            }
+
+            if (transform.localScale.x < 0.1f && transform.localScale.y < 0.1f)
+            {
+                scaleDown = false;
+
+            }
+        }
+
+        if (shrink == false)
+        {
+            if (transform.localScale.x > 5f && transform.localScale.y > 5f)
+            {
+                scaleDown = false;
+            }
+
+            if (scaleDown)
+            {
+                Vector2 scale = new Vector2(transform.localScale.x + scaleRate * Time.deltaTime, transform.localScale.y + scaleRate * Time.deltaTime);
+                transform.localScale = scale;
+            }
+
+            if (transform.localScale.x < 5f && transform.localScale.y < 5f)
+            {
+                scaleDown = true;
             }
         }
     }

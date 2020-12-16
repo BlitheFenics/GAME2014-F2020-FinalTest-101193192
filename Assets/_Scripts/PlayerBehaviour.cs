@@ -300,6 +300,12 @@ public class PlayerBehaviour : MonoBehaviour
             other.gameObject.GetComponent<MovingPlatformController>().isActive = false;
             transform.SetParent(parent);
         }
+        
+        // Grows the platform when it collides with the player
+        if (other.gameObject.CompareTag("Platforms"))
+        {
+            other.gameObject.GetComponent<PlatformManager>().shrink = false;
+        }
     }
 
 
