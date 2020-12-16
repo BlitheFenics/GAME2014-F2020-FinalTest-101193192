@@ -6,6 +6,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
+/* Source File Name: PlayerBehaviour
+ * Author's Name: Phoenix Makins
+ * Student Number: 101193192
+ * Date Last Modified: 2020-12-16
+ * Program Description: Manages the player
+ * Revision History: Added a collision check for my platforms so they know when to shrink or grow/play accompanying sounds.
+ */
+
 [System.Serializable]
 public enum ImpulseSounds
 {
@@ -286,7 +294,7 @@ public class PlayerBehaviour : MonoBehaviour
             transform.SetParent(other.gameObject.transform);
         }
 
-        // Shrinks the platform when it collides with the player
+        // Shrinks the platform untill it dissapeares when it collides with the player and plays accompanying sound
         if (other.gameObject.CompareTag("Platforms"))
         {
             other.gameObject.GetComponent<PlatformManager>().shrink = true;
@@ -300,8 +308,8 @@ public class PlayerBehaviour : MonoBehaviour
             other.gameObject.GetComponent<MovingPlatformController>().isActive = false;
             transform.SetParent(parent);
         }
-        
-        // Grows the platform when it collides with the player
+
+        // Grows the platform untill it reaches original size when the player stops colliding with it and plays accompanying sound
         if (other.gameObject.CompareTag("Platforms"))
         {
             other.gameObject.GetComponent<PlatformManager>().shrink = false;
